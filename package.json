@@ -1,0 +1,25 @@
+{
+  "name": "meanauthapp",
+  "version": "1.0.0",
+  "description": "MEAN stack authentication App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "nodemon": "^1.18.10",
+    "passport": "*",
+    "passport-jwt": "*",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
+  },
+  "author": "Joan Andoni",
+  "license": "ISC"
+}

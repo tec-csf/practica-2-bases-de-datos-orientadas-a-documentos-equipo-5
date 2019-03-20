@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand">Banco XYZ</a>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto ">
+      <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/']">Inicio</a></li>
+    </ul>
+    <ul class=" navbar-nav mt-auto">
+      <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/dashboard']">Estado de cuenta</a></li>
+      <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/profile']">Perfil</a></li>
+
+      <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/login']">Ingresar</a></li>
+      <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/register']">Registrar</a></li>
+      <li *ngIf="authService.loggedIn()" class="nav-item"><a class="nav-link" (click)="onLogoutClick()" href="#">Salir</a></li>
+    </ul>
+  </div>
+</nav>

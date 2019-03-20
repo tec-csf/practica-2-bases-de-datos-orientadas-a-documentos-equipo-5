@@ -1,0 +1,122 @@
+<div class="position-relative overflow-hidden p-2 p-md-3 m-md-3 text-center">
+  <div class="container-fluid">
+
+    <!-- BALANCE GENERAL -->
+    <div class="row">
+      <div class="col-12 position-relative overflow-hidden p-3 p-md-5 text-center ">
+        <h1>Cuenta de <strong class="font-weight-bold" style="font-size: 140%; color: #009ebb;">{{user?.name}}</strong></h1>
+        <h3>Balance general</h3>
+        <h1 *ngIf="this.sumIngresos-this.sumEgresos >= 0" style="color: rgba(0, 207, 116, 1); font-size: 4em; letter-spacing: 10px;">$ {{this.sumIngresos-this.sumEgresos | number}}</h1>
+        <h1 *ngIf="this.sumIngresos-this.sumEgresos < 0" style="color: rgba(221, 67, 67, 1); font-size: 4em; letter-spacing: 10px;">-$ {{makePositive(this.sumIngresos-this.sumEgresos) | number }}</h1>
+      </div>
+    </div>
+
+    <!-- CONTAINER DE LOS INGRESOS Y EGRESOS -->
+    <div class="row d-flex justify-content-around container-fluid">
+
+      <!-- CONTAINER DE LOS INGRESOS -->
+      <div class="col-md-6 position-relative overflow-hidden p-2 p-md-3 text-center ">
+        <h2 style="color: rgba(0, 207, 116, 1);">Ingresos</h2>
+
+        <!-- FORM INGRESOS -->
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Concepto" [(ngModel)]="this.conceptoIngreso" name="conceptoIngreso">
+          </div>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="color: rgba(0, 187, 116, 1);">$</span>
+              </div>
+              <input type="number" class="form-control" placeholder="Monto" aria-label="Amount (to the nearest dollar)" [(ngModel)]="this.montoIngreso" name="montoIngreso">
+              <div class="input-group-append">
+                <span class="input-group-text">.00</span>
+              </div>
+            </div>
+            <small id="MontoHelp" class="form-text text-muted">El monto debe ser positivo.</small>
+          </div>
+          <button type="button" *ngIf="this.conceptoIngreso != null && this.montoIngreso != null" class="btn btn-sm btn-block btn-outline-success" (click)="crearIngreso()" style="margin-bottom: 15px;">Registrar</button>
+        </form>
+
+        <div class="font-weight-bold p-3 mb-3" style="border-radius: 4px; background-color: rgba(0, 207, 116, 0.9)">
+          <h5 style="color: white;">TOTAL DE INGRESOS</h5>
+          <h1 class="font-weight-bold" style="color: white;">$ {{sumIngresos}}</h1>
+        </div>
+
+        <!-- TABLE INGRESOS -->
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" class="font-weight-bold" style="font-size: 1.6em;">Fecha</th>
+                <th scope="col" class="font-weight-bold" style="font-size: 1.6em;">Concepto</th>
+                <th scope="col" class="font-weight-bold" style="font-size: 1.6em;">Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ingreso of this.ingresos">
+                <td style="text-align: left;">{{ingreso?.fecha | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: left;">{{ingreso?.concepto}}</td>
+                <td style="color: rgba(0, 187, 116, 1);">$ {{ingreso?.cantidad}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- CONTAINER DE LOS EGRESOS -->
+      <div class="col-md-6 position-relative overflow-hidden p-2 p-md-3 text-center ">
+        <h2 style="color: rgba(221, 67, 67, 1);">Egresos</h2>
+
+        <!-- FORM EGRESOS -->
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Concepto" [(ngModel)]="this.conceptoEgreso" name="conceptoEgreso">
+          </div>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="color: rgba(221, 67, 67, 1);">-$</span>
+              </div>
+              <input type="number" class="form-control" placeholder="Monto" aria-label="Amount (to the nearest dollar)" [(ngModel)]="this.montoEgreso" name="montoEgreso">
+              <div class="input-group-append">
+                <span class="input-group-text">.00</span>
+              </div>
+            </div>
+            <small id="MontoHelp" class="form-text text-muted">El monto debe ser positivo.</small>
+          </div>
+          <button type="button" *ngIf="this.conceptoEgreso != null && this.montoEgreso != null" class="btn btn-sm btn-block btn-outline-danger" (click)="crearEgreso()" style="margin-bottom: 15px;">Registrar</button>
+        </form>
+
+        <div class="font-weight-bold p-3 mb-3" style="border-radius: 4px; background-color: rgba(221, 67, 67, 0.9)">
+          <h5 style="color: white;">TOTAL DE EGRESOS</h5>
+          <h1 class="font-weight-bold" style="color: white;">-$ {{sumEgresos}}</h1>
+        </div>
+
+        <!-- TABLE EGRESOS -->
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" class="font-weight-bold" style="font-size: 1.6em;">Fecha</th>
+                <th scope="col" class="font-weight-bold" style="font-size: 1.6em;">Concepto</th>
+                <th scope="col" class="font-weight-bold" style="font-size: 1.6em;">Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let egreso of this.egresos">
+                <td style="text-align: left;">{{egreso?.fecha | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: left;">{{egreso?.concepto}}</td>
+                <td style="color: rgba(221, 67, 67, 1);">-$ {{egreso?.cantidad}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

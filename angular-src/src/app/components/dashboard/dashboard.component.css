@@ -1,0 +1,7 @@
+h1::first-letter {
+  font-size: 110%;
+}
+
+h2::first-letter {
+  font-size: 105%;
+}
