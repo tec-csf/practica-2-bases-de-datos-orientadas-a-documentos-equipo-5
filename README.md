@@ -19,7 +19,7 @@ Clone the repository in your computer with the following command
 git clone https://github.com/JoanAndoni/BancoAPIRest
 ```
 
-Change to the folder that you downloaded the repository
+Change to the folder that you downloaded the repository  
 
 Install all the node.js dependencies
 ```bash
